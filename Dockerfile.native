@@ -1,0 +1,38 @@
+FROM container-registry.oracle.com/graalvm/native-image:21 AS graalvm
+WORKDIR /home/app
+COPY --link /build/docker/native-optimized/layers/libs /home/app/libs
+COPY --link /build/docker/native-optimized/layers/app /home/app/
+RUN mkdir /home/app/config-dirs
+RUN mkdir -p /home/app/config-dirs/generateResourcesConfigFile
+RUN mkdir -p /home/app/config-dirs/org.jetbrains.kotlin/kotlin-stdlib/1.7.10
+RUN mkdir -p /home/app/config-dirs/org.jetbrains.kotlin/kotlin-reflect/1.7.10
+RUN mkdir -p /home/app/config-dirs/com.fasterxml.jackson.core/jackson-databind/2.15.2
+RUN mkdir -p /home/app/config-dirs/io.netty/netty-common/4.1.80.Final
+RUN mkdir -p /home/app/config-dirs/com.github.ben-manes.caffeine/caffeine/3.1.2
+RUN mkdir -p /home/app/config-dirs/org.hibernate.orm/hibernate-core/6.2.0.Final
+RUN mkdir -p /home/app/config-dirs/org.jboss.logging/jboss-logging/3.5.0.Final
+RUN mkdir -p /home/app/config-dirs/org.glassfish.jaxb/jaxb-runtime/3.0.2
+RUN mkdir -p /home/app/config-dirs/org.hibernate.reactive/hibernate-reactive-core/2.0.0.Final
+RUN mkdir -p /home/app/config-dirs/org.hdrhistogram/HdrHistogram/2.1.12
+RUN mkdir -p /home/app/config-dirs/org.liquibase/liquibase-core/4.23.0
+RUN mkdir -p /home/app/config-dirs/ch.qos.logback/logback-classic/1.4.9
+RUN mkdir -p /home/app/config-dirs/org.postgresql/postgresql/42.3.4
+COPY --link /build/docker/native-optimized/config-dirs/generateResourcesConfigFile /home/app/config-dirs/generateResourcesConfigFile
+COPY --link /build/docker/native-optimized/config-dirs/org.jetbrains.kotlin/kotlin-stdlib/1.7.10 /home/app/config-dirs/org.jetbrains.kotlin/kotlin-stdlib/1.7.10
+COPY --link /build/docker/native-optimized/config-dirs/org.jetbrains.kotlin/kotlin-reflect/1.7.10 /home/app/config-dirs/org.jetbrains.kotlin/kotlin-reflect/1.7.10
+COPY --link /build/docker/native-optimized/config-dirs/com.fasterxml.jackson.core/jackson-databind/2.15.2 /home/app/config-dirs/com.fasterxml.jackson.core/jackson-databind/2.15.2
+COPY --link /build/docker/native-optimized/config-dirs/io.netty/netty-common/4.1.80.Final /home/app/config-dirs/io.netty/netty-common/4.1.80.Final
+COPY --link /build/docker/native-optimized/config-dirs/com.github.ben-manes.caffeine/caffeine/3.1.2 /home/app/config-dirs/com.github.ben-manes.caffeine/caffeine/3.1.2
+COPY --link /build/docker/native-optimized/config-dirs/org.hibernate.orm/hibernate-core/6.2.0.Final /home/app/config-dirs/org.hibernate.orm/hibernate-core/6.2.0.Final
+COPY --link /build/docker/native-optimized/config-dirs/org.jboss.logging/jboss-logging/3.5.0.Final /home/app/config-dirs/org.jboss.logging/jboss-logging/3.5.0.Final
+COPY --link /build/docker/native-optimized/config-dirs/org.glassfish.jaxb/jaxb-runtime/3.0.2 /home/app/config-dirs/org.glassfish.jaxb/jaxb-runtime/3.0.2
+COPY --link /build/docker/native-optimized/config-dirs/org.hibernate.reactive/hibernate-reactive-core/2.0.0.Final /home/app/config-dirs/org.hibernate.reactive/hibernate-reactive-core/2.0.0.Final
+COPY --link /build/docker/native-optimized/config-dirs/org.hdrhistogram/HdrHistogram/2.1.12 /home/app/config-dirs/org.hdrhistogram/HdrHistogram/2.1.12
+COPY --link /build/docker/native-optimized/config-dirs/org.liquibase/liquibase-core/4.23.0 /home/app/config-dirs/org.liquibase/liquibase-core/4.23.0
+COPY --link /build/docker/native-optimized/config-dirs/ch.qos.logback/logback-classic/1.4.9 /home/app/config-dirs/ch.qos.logback/logback-classic/1.4.9
+COPY --link /build/docker/native-optimized/config-dirs/org.postgresql/postgresql/42.3.4 /home/app/config-dirs/org.postgresql/postgresql/42.3.4
+RUN native-image --exclude-config .*/libs/netty-codec-http2-4.1.108.Final.jar ^/META-INF/native-image/.* --exclude-config .*/libs/netty-handler-4.1.108.Final.jar ^/META-INF/native-image/.* --exclude-config .*/libs/netty-buffer-4.1.108.Final.jar ^/META-INF/native-image/.* --exclude-config .*/libs/netty-resolver-dns-4.1.108.Final.jar ^/META-INF/native-image/.* --exclude-config .*/libs/netty-common-4.1.108.Final.jar ^/META-INF/native-image/.* --exclude-config .*/libs/netty-transport-4.1.108.Final.jar ^/META-INF/native-image/.* --exclude-config .*/libs/netty-codec-http-4.1.108.Final.jar ^/META-INF/native-image/.* -cp /home/app/libs/*.jar:/home/app/resources:/home/app/application.jar --no-fallback -o application -H:ConfigurationFileDirectories=/home/app/config-dirs/generateResourcesConfigFile,/home/app/config-dirs/org.jetbrains.kotlin/kotlin-stdlib/1.7.10,/home/app/config-dirs/org.jetbrains.kotlin/kotlin-reflect/1.7.10,/home/app/config-dirs/com.fasterxml.jackson.core/jackson-databind/2.15.2,/home/app/config-dirs/io.netty/netty-buffer/4.1.80.Final,/home/app/config-dirs/io.netty/netty-common/4.1.80.Final,/home/app/config-dirs/io.netty/netty-transport/4.1.80.Final,/home/app/config-dirs/io.netty/netty-codec-http/4.1.80.Final,/home/app/config-dirs/io.netty/netty-handler/4.1.80.Final,/home/app/config-dirs/io.netty/netty-codec-http2/4.1.80.Final,/home/app/config-dirs/io.netty/netty-resolver-dns/4.1.80.Final,/home/app/config-dirs/com.github.ben-manes.caffeine/caffeine/3.1.2,/home/app/config-dirs/org.hibernate.orm/hibernate-core/6.2.0.Final,/home/app/config-dirs/org.jboss.logging/jboss-logging/3.5.0.Final,/home/app/config-dirs/org.glassfish.jaxb/jaxb-runtime/3.0.2,/home/app/config-dirs/org.hibernate.reactive/hibernate-reactive-core/2.0.0.Final,/home/app/config-dirs/org.hdrhistogram/HdrHistogram/2.1.12,/home/app/config-dirs/org.liquibase/liquibase-core/4.23.0,/home/app/config-dirs/ch.qos.logback/logback-classic/1.4.9,/home/app/config-dirs/org.postgresql/postgresql/42.3.4 --verbose --gc=G1 com.example.ApplicationKt
+FROM container-registry.oracle.com/graalvm/native-image:21
+EXPOSE 8080
+COPY --link --from=graalvm /home/app/application /app/application
+ENTRYPOINT ["/app/application"]

@@ -1,0 +1,34 @@
+micronaut:
+  application:
+    name: demo
+  router:
+    static-resources:
+      swagger:
+        paths: classpath:META-INF/swagger
+        mapping: /swagger/**
+      rapidoc:
+        paths: classpath:META-INF/swagger/views/rapidoc
+        mapping: /rapidoc/**
+  metrics:
+    enabled: true
+jpa:
+  default:
+    properties:
+      hibernate:
+        hbm2ddl:
+          auto: update
+        connection:
+          url: jdbc:postgresql://localhost:5432/postgres
+          username: postgres
+          password: dummy_password
+    reactive: true
+datasources:
+  default:
+    url: jdbc:postgresql://localhost:5432/postgres
+    driverClassName: org.postgresql.Driver
+    platform: postgresql
+    username: postgres
+    password: dummy_password
+otel:
+  traces:
+    exporter: logging,otlp

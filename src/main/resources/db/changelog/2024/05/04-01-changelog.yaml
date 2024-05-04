@@ -1,0 +1,61 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1714825870515-1
+      author: daniil (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_continents
+                  name: id
+                  type: INT
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: updated_at
+                  type: timestamp
+            tableName: continents
+  - changeSet:
+      id: 1714825870515-2
+      author: daniil (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_countries
+                  name: id
+                  type: INT
+              - column:
+                  name: name
+                  type: VARCHAR(255)
+              - column:
+                  name: updated_at
+                  type: timestamp
+              - column:
+                  name: image_path
+                  type: VARCHAR(255)
+              - column:
+                  name: continent_id
+                  type: INT
+            tableName: countries
+  - changeSet:
+      id: 1714825870515-3
+      author: daniil (generated)
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: continent_id
+            baseTableName: countries
+            constraintName: FK_COUNTRIES_ON_CONTINENT
+            referencedColumnNames: id
+            referencedTableName: continents
+

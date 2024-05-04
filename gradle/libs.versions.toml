@@ -1,0 +1,60 @@
+[versions]
+kotlin = "1.9.23"
+arrow = "1.2.4"
+kotest = "5.8.1"
+kotlinx-coroutines = "1.8.1-Beta"
+kotlinx-serialization = "1.6.3"
+mockk = "1.13.10"
+opentelemetry = "1.37.0"
+opentelemetryInstrumentation = "2.2.0"
+ktor = "3.0.0-beta-1"
+
+[libraries]
+sentryBom = {module = "io.sentry:sentry-bom", version = "7.6.0"}
+stdlib-jdk8 = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
+stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
+coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinx-coroutines" }
+coroutines-reactive = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-reactive", version.ref = "kotlinx-coroutines" }
+coroutines-reactor = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-reactor", version.ref = "kotlinx-coroutines" }
+coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinx-coroutines" }
+datetime = "org.jetbrains.kotlinx:kotlinx-datetime:0.6.0-RC.2"
+io = "org.jetbrains.kotlinx:kotlinx-io-core:0.3.2"
+serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinx-serialization" }
+serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization" }
+arrow = { module = "io.arrow-kt:arrow-core", version.ref = "arrow" }
+arrow-atomic = { module = "io.arrow-kt:arrow-atomic", version.ref = "arrow" }
+arrow-fx-coroutines = { module = "io.arrow-kt:arrow-fx-coroutines", version.ref = "arrow" }
+arrow-optics = { module = "io.arrow-kt:arrow-optics", version.ref = "arrow" }
+arrow-optics-ksp = { module = "io.arrow-kt:arrow-optics-ksp-plugin", version.ref = "arrow" }
+arrow-resilience = { module = "io.arrow-kt:arrow-resilience", version.ref = "arrow" }
+arrow-serialization = { module = "io.arrow-kt:arrow-core-serialization", version.ref = "arrow" }
+
+otel-bom = { module = "io.opentelemetry:opentelemetry-bom", version.ref = "opentelemetry" }
+otel-instrument-bom = { module = "io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom", version.ref = "opentelemetryInstrumentation" }
+otel-export-logging = {module ="io.opentelemetry:opentelemetry-exporter-logging", version.ref = "opentelemetry"}
+otel-export-otlp = {module="io.opentelemetry:opentelemetry-exporter-otlp",version.ref="opentelemetry"}
+otel-sdk = { module = "io.opentelemetry:opentelemetry-sdk", version.ref = "opentelemetry" }
+otel-kapt = "io.opentelemetry.instrumentation:opentelemetry-instrumentation-annotations:2.2.0"
+otel-api = { module = "io.opentelemetry:opentelemetry-api", version.ref = "opentelemetry" }
+otel-ext = { module = "io.opentelemetry:opentelemetry-extension-kotlin", version.ref = "opentelemetry" }
+otel-semconv = "io.opentelemetry:opentelemetry-semconv:1.30.1-alpha"
+ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-encoding = { module = "io.ktor:ktor-client-encoding", version.ref = "ktor" }
+ktor-client-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-client-resources = { module = "io.ktor:ktor-client-resources", version.ref = "ktor" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+kotest = { module = "io.kotest:kotest-runner-junit5-jvm", version.ref = "kotest" }
+kotest-property = { module = "io.kotest:kotest-property", version.ref = "kotest" }
+kotlin-test-junit = { module="org.jetbrains.kotlin:kotlin-test-junit",version.ref="kotlin"}
+[plugins]
+serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+
+[bundles]
+otel = ["otel-sdk","otel-api","otel-ext","otel-semconv","otel-export-logging","otel-export-otlp"]
+baseline = ["reflect","datetime","io","stdlib-jdk8"]
+coroutines = ["coroutines-core", "coroutines-reactor","coroutines-reactive"]
+ktor = ["ktor-client-cio", "ktor-client-core", "ktor-client-encoding", "ktor-client-negotiation", "ktor-client-resources"]
+serialization = ["serialization-core", "serialization-json"]
+arrow = ["arrow", "arrow-atomic", "arrow-fx-coroutines", "arrow-optics", "arrow-resilience", "arrow-serialization"]

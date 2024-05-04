@@ -1,0 +1,16 @@
+endpoints:
+  all:
+    enabled: true
+    sensitive: false
+  health:
+    details-visible: ANONYMOUS
+  loggers:
+    write-sensitive: false
+  caches:
+    enabled: true
+    sensitive: false
+test-resources:
+  containers:
+    postgres:
+      image-name: postgres:16.2
+

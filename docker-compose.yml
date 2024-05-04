@@ -1,0 +1,25 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.native
+    depends_on:
+      - postgres
+
+    networks:
+      - default
+
+  postgres:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: dummy_password
+    networks:
+      - default
+networks:
+  default:
+    driver: bridge
